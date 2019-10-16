@@ -1,0 +1,40 @@
+# Loosely modeled on the starter submit file here:
+#   http://chtc.cs.wisc.edu/helloworld.shtml
+
+# Type of job we will be running
+universe = vanilla
+
+# Resource requirements we need for this job
+request_cpus = 1
+request_memory = 2GB
+request_disk = 1GB
+
+# Specify the policy for moving files between the execute
+# and submit environments
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+
+# Finally, which files to transfer.  We'll be using CUDA
+# and backprop for this example.
+# NOTE: the gpgpu-sim configuration files are a macro; to be
+# defined later.
+initialdir = $(gpgpusim_configdir)-results
+transfer_input_files = ../cuda_files.tar.gz, ../backprop, ../$(gpgpusim_configdir)/
+
+# For backprop, the argument is the network size; increasing this (must be divisible
+# by 16) will increase the runtime.
+arguments = 8192
+executable = backprop_test.sh
+
+# Filenames for output; recall this will be put into $(initialdir), not the
+# submit directory.
+output = backprop.out
+error = backprop.err
+
+# Condor's logging for the job will go to this file.
+log = backprop.log
+
+# Name of the configuration directory to use.
+gpgpusim_configdir=SM2_GTX480
+
+queue 1

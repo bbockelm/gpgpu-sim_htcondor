@@ -1,1 +1,8 @@
 build_instructions/interactive.*
+backprop/backprop
+backprop/cuda_files.tar.gz
+backprop/SM2_GTX480-results/_cuobjdump*
+backprop/SM2_GTX480-results/_app_cuda*
+backprop/SM2_GTX480-results/backprop*
+backprop/SM2_GTX480-results/gpgpu_inst_stats.txt
+backprop/SM2_GTX480-results/gpgpusim_power_report__*

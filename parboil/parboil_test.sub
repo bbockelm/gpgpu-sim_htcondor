@@ -1,4 +1,3 @@
-
 # Loosely modeled on the starter submit file here:
 #   http://chtc.cs.wisc.edu/helloworld.shtml
 
@@ -19,13 +18,27 @@ when_to_transfer_output = ON_EXIT
 # and parboil-cutcp for this example.
 # NOTE: the gpgpu-sim configuration files are a macro; to be
 # defined later.
+
+# This is the directory that all the `transfer_input_files` will be relative to;
+# We start inside a results directory and pull inputs from the parent directory.
+# You may want a distinct `initialdir` per job run.
 initialdir = $(gpgpusim_configdir)-results
 transfer_input_files = ../cuda_files.tar.gz, ../watbox.sl40.pqr, ../parboil-cutcp, ../$(gpgpusim_configdir)/
+
+# We do not specify `transfer_output_files`; accordingly *all* files created in the
+# top-level job directory will be copied to the `initialdir` specified above when
+# the job completes.
+
+# The name of the wrapper script
 executable = parboil_test.sh
+
+# The filenames for stdout, stderr, and HTCondor logging information.
 output = parboil.out
 error = parboil.err
 log = parboil.log
 
-gpgpusim_configdir=SM2_GTX480
+# Finally, the macro that controls the name of the configuration directory; vary this,
+# and you will change where the inputs come from above
+gpgpusim_configdir = SM2_GTX480
 
 queue 1

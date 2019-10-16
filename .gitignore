@@ -6,3 +6,10 @@ backprop/SM2_GTX480-results/_app_cuda*
 backprop/SM2_GTX480-results/backprop*
 backprop/SM2_GTX480-results/gpgpu_inst_stats.txt
 backprop/SM2_GTX480-results/gpgpusim_power_report__*
+parboil/parboil-cutcp
+parboil/cuda_files.tar.gz
+parboil/SM2_GTX480-results/_cuobjdump*
+parboil/SM2_GTX480-results/_app_cuda*
+parboil/SM2_GTX480-results/parboil*
+parboil/SM2_GTX480-results/gpgpu_inst_stats.txt
+parboil/SM2_GTX480-results/gpgpusim_power_report__*

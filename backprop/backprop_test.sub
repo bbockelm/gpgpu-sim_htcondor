@@ -21,8 +21,12 @@ when_to_transfer_output = ON_EXIT
 initialdir = $(gpgpusim_configdir)-results
 transfer_input_files = ../cuda_files.tar.gz, ../backprop, ../$(gpgpusim_configdir)/
 
+# We do not specify `transfer_output_files`; accordingly *all* files created in the
+# top-level job directory will be copied to the `initialdir` specified above when
+# the job completes.
+
 # For backprop, the argument is the network size; increasing this (must be divisible
-# by 16) will increase the runtime.
+# by 16) will increase the runtime.  The value 8192 should result in a 2 minute runtime.
 arguments = 8192
 executable = backprop_test.sh
 

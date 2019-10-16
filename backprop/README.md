@@ -2,6 +2,9 @@
 Running GPGPU-Sim with backprop on HTCondor
 ===========================================
 
+Setup
+-----
+
 In this tutorial, we'll run the `backprop` benchmark using GPGPU-Sim inside a HTCondor job.
 
 First, get a copy of the software runtime (`cuda_files.tar.gz`) and the sample executable (`backprop`).
@@ -9,8 +12,14 @@ First, get a copy of the software runtime (`cuda_files.tar.gz`) and the sample e
 If you are using the copies we have prepared for the class, you can find both files in `/srv/sinclair` on
 the login host; otherwise, see the `build_instructions` subdirectory for making your own.
 
-First, we will need to prepare a few configuration files; they are contained in this git repository
-in the `SM2_GTX480 directory.  This contains the GPGPU-Sim configurations for the GTX480 (these
+If you are using the prepared versions, copy them to the current directory:
+
+```
+cp /srv/sinclair/cuda_files.tar.gz /srv/sinclair/backprop .
+```
+
+Next, we will need a few configuration files; they are contained in this git repository
+in the `SM2_GTX480` directory.  This contains the GPGPU-Sim configurations for the GTX480 (these
 configurations were taken from `gpgpu-sim_distribution/configs/tested-cfgs/SM2_GTX480`).  Within
 this directory are the three files necessary to simulate the GTX480, `config_fermi_islip.icnt`,
 `gpgpusim.config`, and `gpuwattch_gtx480.xml`.
@@ -93,3 +102,25 @@ export CUOBJDUMP_SIM_FILE=jj
 exec ./backprop $1
 ```
 
+Running
+-------
+
+To submit the job, use `condor_submit`:
+
+```
+condor_submit backprop_test.sub
+```
+
+Refer to the lecture slides on HTCondor to help track job progress.  Recall:
+
+   - Logging for the `SM2_GTX480` run will be placed into `SM2_GTX480-results` directory.
+   - Interaction with the job queue is done with `condor_q`; see the CHTC resources for
+     [submitting simple jobs](http://chtc.cs.wisc.edu/helloworld.shtml) or [`condor_q` itself](http://chtc.cs.wisc.edu/condor_q.shtml)
+   - If a job goes on hold, it means there is an issue which likely requires human intervention
+     to resolve; see the output of `condor_q -held`.
+   - Use `condor_ssh_to_job` to get an interactive terminal to a running job.
+   - If you submit multiple jobs using the above configuration file, they will all overwrite
+     the same set of files (not append!).  You can use the `$(ClusterId)` macro to ensure the
+     logfiles are unique.
+   - To ensure the output directories are unique, try the [multiple job directories guide](http://chtc.cs.wisc.edu/multiple-job-dirs.shtml)
+     on the CHTC website.
